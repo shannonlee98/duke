@@ -14,6 +14,7 @@ public class Duke {
         String text = input.nextLine();
         while(!(text.contentEquals("bye"))){
             printLine(text);
+            text = input.nextLine();
         }
         printLine("Bye. Hope to see you soon!");
     }
