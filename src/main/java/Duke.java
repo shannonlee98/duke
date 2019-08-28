@@ -7,7 +7,6 @@ public class Duke {
 
     public static void main(String[] args) {
         greet();
-//        print(Character.toString((char) 0x2713));
 
         String text = input.nextLine();
         while(!(text.contentEquals("bye"))){
