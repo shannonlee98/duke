@@ -3,7 +3,7 @@ public class Duke {
 
     private static Scanner input = new Scanner(System.in);
     private static Task[] list = new Task[100];
-    private static int i = 0;
+    private static int numberOfTasks = 0;
 
     public static void main(String[] args) {
         greet();
@@ -13,10 +13,21 @@ public class Duke {
             printLine();
             if (text.contentEquals("list")) {
                 list();
-            } else if (text.contains("done ") && text.substring(0, 5).contentEquals("done ")) {
+            } else if (text.startsWith("done")) {
                 done(text.substring(5));
+            } else if (text.startsWith("todo")){
+                list[numberOfTasks] = new Todo(text.substring(5));
+                add();
             } else {
-                add(text);
+                // Tasks with time
+                int index = text.indexOf("/");
+                String time = text.substring(index + 3);
+                if (text.startsWith("deadline")){
+                    list[numberOfTasks] = new Deadline(text.substring(9,index), time);
+                } else if (text.startsWith("event")){
+                    list[numberOfTasks] = new Event(text.substring(6,index), time);
+                }
+                add();
             }
             printLine();
             text = input.nextLine();
@@ -26,25 +37,23 @@ public class Duke {
 
     private static void done(String text) {
         int taskNumber = Integer.parseInt(text) - 1;
-        if (taskNumber < i) {
+        if (taskNumber < numberOfTasks) {
             list[taskNumber].markAsDone();
             print("Nice! I've marked this task as done: ");
             print("[" + list[taskNumber].getStatusIcon() + "] " + list[taskNumber].description);
         }
     }
 
-    private static void add(String text) {
-        Task t = new Task(text);
-        print("added: " + t.description);
-
-        list [i] = t;
-        i++;
+    private static void add() {
+        print("Got it. I've added this task: ");
+        print(list[numberOfTasks].toString());
+        print("Now you have " + ++numberOfTasks + " tasks in the list.");
     }
 
     private static void list() {
         print("Here are the tasks in your list:");
-        for (int j = 0; j < i; j++){
-            String text = (char) j+1 + ". [" + list[j].getStatusIcon() + "] " + list[j].description;
+        for (int j = 0; j < numberOfTasks; j++){
+            String text = (char) j+1 + ". " + list[j].toString();
             print(text);
         }
     }
@@ -66,7 +75,7 @@ public class Duke {
         print("Bye. Hope to see you soon!");
     }
 
-    public static void printLine() {
+    private static void printLine() {
         print("_______________________________________________");
     }
 
