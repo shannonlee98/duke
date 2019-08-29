@@ -14,20 +14,38 @@ public class Duke {
             if (text.contentEquals("list")) {
                 list();
             } else if (text.startsWith("done")) {
-                done(text.substring(5));
-            } else if (text.startsWith("todo")){
-                list[numberOfTasks] = new Todo(text.substring(5));
-                add();
-            } else {
-                // Tasks with time
-                int index = text.indexOf("/");
-                String time = text.substring(index + 3);
-                if (text.startsWith("deadline")){
-                    list[numberOfTasks] = new Deadline(text.substring(9,index), time);
-                } else if (text.startsWith("event")){
-                    list[numberOfTasks] = new Event(text.substring(6,index), time);
+                try{
+                    done(text.substring(4));
+                } catch (NumberFormatException e) {
+                    print("Please enter a number.");
                 }
-                add();
+            } else if (text.startsWith("todo")){
+                try{
+                    list[numberOfTasks] = new Todo(text.substring(5));
+                    add();
+                } catch (StringIndexOutOfBoundsException e) {
+                    print("OOPS!! The description of a todo cannot be empty.");
+                }
+            } else if (text.startsWith("deadline")) {
+                try{
+                    int index = text.indexOf("/by");
+                    String time = text.substring(index + 3);
+                    list[numberOfTasks] = new Deadline(text.substring(9,index), time);
+                    add();
+                } catch (StringIndexOutOfBoundsException e) {
+                    print("OOPS!! The description or time of a deadline cannot be empty.");
+                }
+            } else if (text.startsWith("event")){
+                try{
+                    int index = text.indexOf("/at");
+                    String time = text.substring(index + 3);
+                    list[numberOfTasks] = new Event(text.substring(6,index), time);
+                    add();
+                } catch (StringIndexOutOfBoundsException e) {
+                    print("OOPS!! The description or time of an event cannot be empty.");
+                }
+            } else {
+                print("OOPS!! I'm sorry, but I don't understand what that means.");
             }
             printLine();
             text = input.nextLine();
@@ -35,12 +53,17 @@ public class Duke {
         exit();
     }
 
-    private static void done(String text) {
-        int taskNumber = Integer.parseInt(text) - 1;
+    private static void done(String text) throws NumberFormatException{
+        if(text.length() < 2){
+            throw new NumberFormatException();
+        }
+        int taskNumber = Integer.parseInt(text.substring(1)) - 1;
         if (taskNumber < numberOfTasks) {
             list[taskNumber].markAsDone();
             print("Nice! I've marked this task as done: ");
             print("[" + list[taskNumber].getStatusIcon() + "] " + list[taskNumber].description);
+        } else {
+            print("No such task number.");
         }
     }
 
