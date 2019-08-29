@@ -1,12 +1,20 @@
+import java.io.Reader;
+import java.util.Scanner;
+
 public class Todo extends Task{
 
     public Todo(String description) {
         super(description);
     }
 
-    public Todo(String description, int status) {
+    public Todo(int status, String description) {
         super(description);
         if(status == 1) super.markAsDone();
+    }
+
+    @Override
+    public String toFile() {
+        return "T " + super.toFile();
     }
 
     @Override

@@ -11,82 +11,84 @@ public class Duke {
     public static void main(String[] args) throws IOException {
         greet();
 
-        setupList();
+        readFile();
 
-        String text = input.nextLine();
-        while(!(text.contentEquals("bye"))){
+        String text = input.next();
+        while (!text.contentEquals("bye")) {
             printLine();
-            if (text.contentEquals("list")) {
-                list();
-            } else if (text.startsWith("done")) {
-                try{
-                    done(text.substring(4));
-                } catch (NumberFormatException e) {
-                    print("Please enter a number.");
+            switch (text) {
+                case "list": {
+                    list();
+                    break;
                 }
-            } else if (text.startsWith("todo")){
-                try{
-                    list[numberOfTasks] = new Todo(text.substring(5));
-                    add("T");
-                } catch (StringIndexOutOfBoundsException e) {
-                    print("OOPS!! The description of a todo cannot be empty.");
+                case "done": {
+                    try {
+                        done(input.nextInt());
+                    } catch (NumberFormatException e) {
+                        print("Please enter a number.");
+                    }
+                    break;
                 }
-            } else if (text.startsWith("deadline")) {
-                try{
-                    int index = text.indexOf("/by");
-                    String time = text.substring(index + 3);
-                    list[numberOfTasks] = new Deadline(text.substring(9,index), time);
-                    add("D");
-                } catch (StringIndexOutOfBoundsException e) {
-                    print("OOPS!! The description or time of a deadline cannot be empty.");
+                case "todo": {
+                    list[numberOfTasks] = new Todo(input.nextLine());
+                    add();
+                    break;
                 }
-            } else if (text.startsWith("event")){
-                try{
-                    int index = text.indexOf("/at");
-                    String time = text.substring(index + 3);
-                    list[numberOfTasks] = new Event(text.substring(6,index), time);
-                    add("E");
-                } catch (StringIndexOutOfBoundsException e) {
-                    print("OOPS!! The description or time of an event cannot be empty.");
+                case "deadline": {
+                    String info[] = input.nextLine().split("/by");
+                    list[numberOfTasks] = new Deadline(info[0], info[1]);
+                    add();
+                    break;
                 }
-            } else {
-                print("OOPS!! I'm sorry, but I don't understand what that means.");
+                case "event": {
+                    String info[] = input.nextLine().split("/at");
+                    list[numberOfTasks] = new Event(info[0], info[1]);
+                    add();
+                    break;
+                }
+                default:
+                    print("OOPS!! I'm sorry, but I don't understand what that means.");
             }
             printLine();
-            text = input.nextLine();
+            text = input.next();
         }
-        exit();
+        writeToFile();
     }
 
-    private static void setupList() throws FileNotFoundException {
+    private static void readFile() throws FileNotFoundException {
         String file = "output.txt";
         Scanner reader = new Scanner(new File(file));
         while (reader.hasNextLine()){
-            if (reader.next().contentEquals("T")) {
+            try {
+                String type = reader.next();
                 int status = reader.nextInt();
-                String description = reader.nextLine().stripLeading();
-                Todo task = new Todo(description, status);
+                Task task = Task.createTask(type, status, reader.nextLine(), false);
                 list[numberOfTasks++] = task;
+            } catch (DukeException e) {
+                print(e.getMessage());
             }
         }
         reader.close();
     }
 
-    public static void writeToFile(String type, int status, String description)
-            throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt", true));
-        writer.append("\n" + type + " ");
-        writer.append(status + " ");
-        writer.append(description);
+    private static void add() {
+        print("Got it. I've added this task: ");
+        print(list[numberOfTasks].toString());
+        print("Now you have " + ++numberOfTasks + " tasks in the list.");
+    }
+
+    public static void writeToFile() throws IOException {
+        PrintWriter writer = new PrintWriter("output.txt");
+
+        for (int j = 0; j < numberOfTasks; j++) {
+            String append = list[j].toFile();
+            writer.append(append + "\n");
+        }
         writer.close();
     }
 
-    private static void done(String text) throws NumberFormatException{
-        if(text.length() < 2){
-            throw new NumberFormatException();
-        }
-        int taskNumber = Integer.parseInt(text.substring(1)) - 1;
-        if (taskNumber < numberOfTasks) {
+    private static void done(int taskNumber) throws NumberFormatException{
+        if (--taskNumber < numberOfTasks) {
             list[taskNumber].markAsDone();
             print("Nice! I've marked this task as done: ");
             print("[" + list[taskNumber].getStatusIcon() + "] " + list[taskNumber].description);
@@ -95,17 +97,10 @@ public class Duke {
         }
     }
 
-    private static void add(String type) throws IOException {
-        writeToFile(type, list[numberOfTasks].getStatus(), list[numberOfTasks].getDescription());
-        print("Got it. I've added this task: ");
-        print(list[numberOfTasks].toString());
-        print("Now you have " + ++numberOfTasks + " tasks in the list.");
-    }
-
     private static void list() {
         print("Here are the tasks in your list:");
         for (int j = 0; j < numberOfTasks; j++){
-            String text = (char) j+1 + ". " + list[j].toString();
+            String text = "\t" + (j+1) + "." + list[j].toString();
             print(text);
         }
     }
@@ -125,6 +120,11 @@ public class Duke {
 
     private static void exit() {
         print("Bye. Hope to see you soon!");
+        try {
+            writeToFile();
+        } catch (IOException e) {
+            print("Error writing to file.");
+        }
     }
 
     private static void printLine() {

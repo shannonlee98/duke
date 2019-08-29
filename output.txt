@@ -1,7 +1,8 @@
-T 0 assignment
-T 0 bake
-T 0 bake cake
-T 0 readings
-T 0 hello
-T 0 drink smoothie
-T 0 make smoothie
+T 0 holiday
+D 1 eat a lot|now
+E 0 fly away|then
+D 0 sleep later|9
+E 0 tea break|noon
+T 0 sleep
+D 0 assign | tmr
+E 0 school | today
