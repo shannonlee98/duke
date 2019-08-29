@@ -1,12 +1,17 @@
+import java.io.*;
 import java.util.Scanner;
+import java.util.stream.Stream;
+
 public class Duke {
 
     private static Scanner input = new Scanner(System.in);
     private static Task[] list = new Task[100];
     private static int numberOfTasks = 0;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         greet();
+
+        setupList();
 
         String text = input.nextLine();
         while(!(text.contentEquals("bye"))){
@@ -22,7 +27,7 @@ public class Duke {
             } else if (text.startsWith("todo")){
                 try{
                     list[numberOfTasks] = new Todo(text.substring(5));
-                    add();
+                    add("T");
                 } catch (StringIndexOutOfBoundsException e) {
                     print("OOPS!! The description of a todo cannot be empty.");
                 }
@@ -31,7 +36,7 @@ public class Duke {
                     int index = text.indexOf("/by");
                     String time = text.substring(index + 3);
                     list[numberOfTasks] = new Deadline(text.substring(9,index), time);
-                    add();
+                    add("D");
                 } catch (StringIndexOutOfBoundsException e) {
                     print("OOPS!! The description or time of a deadline cannot be empty.");
                 }
@@ -40,7 +45,7 @@ public class Duke {
                     int index = text.indexOf("/at");
                     String time = text.substring(index + 3);
                     list[numberOfTasks] = new Event(text.substring(6,index), time);
-                    add();
+                    add("E");
                 } catch (StringIndexOutOfBoundsException e) {
                     print("OOPS!! The description or time of an event cannot be empty.");
                 }
@@ -51,6 +56,29 @@ public class Duke {
             text = input.nextLine();
         }
         exit();
+    }
+
+    private static void setupList() throws FileNotFoundException {
+        String file = "output.txt";
+        Scanner reader = new Scanner(new File(file));
+        while (reader.hasNextLine()){
+            if (reader.next().contentEquals("T")) {
+                int status = reader.nextInt();
+                String description = reader.nextLine().stripLeading();
+                Todo task = new Todo(description, status);
+                list[numberOfTasks++] = task;
+            }
+        }
+        reader.close();
+    }
+
+    public static void writeToFile(String type, int status, String description)
+            throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt", true));
+        writer.append("\n" + type + " ");
+        writer.append(status + " ");
+        writer.append(description);
+        writer.close();
     }
 
     private static void done(String text) throws NumberFormatException{
@@ -67,7 +95,8 @@ public class Duke {
         }
     }
 
-    private static void add() {
+    private static void add(String type) throws IOException {
+        writeToFile(type, list[numberOfTasks].getStatus(), list[numberOfTasks].getDescription());
         print("Got it. I've added this task: ");
         print(list[numberOfTasks].toString());
         print("Now you have " + ++numberOfTasks + " tasks in the list.");
@@ -83,10 +112,10 @@ public class Duke {
 
     private static void greet() {
         String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
+                    + "|  _ \\ _   _| | _____ \n"
+                    + "| | | | | | | |/ / _ \\\n"
+                    + "| |_| | |_| |   <  __/\n"
+                    + "|____/ \\__,_|_|\\_\\___|\n";
         print(logo);
 
         printLine();

@@ -1,0 +1,7 @@
+T 0 assignment
+T 0 bake
+T 0 bake cake
+T 0 readings
+T 0 hello
+T 0 drink smoothie
+T 0 make smoothie
