@@ -11,10 +11,6 @@ public class Task {
         return (isDone ? "✓" : "✗");
     }
 
-    public String getDescription() {
-        return this.description;
-    }
-
     public void markAsDone() {
         this.isDone = true;
     }
@@ -27,21 +23,25 @@ public class Task {
         return this.getStatus() + this.description;
     }
 
-    public int getStatus() {
+    private int getStatus() {
         return (isDone ? 1 : 0);
     }
 
-    public static Task createTask(String type, int status, String reader, boolean isNewTask) throws DukeException {
+    public static Task createTask(String type, int status, String reader) throws DukeException {
         try {
-            String[] entry = reader.split("\\|");
+            reader = reader.replace("/at", "|");
+            reader = reader.replace("/by", "|");
+            String[] entry = reader.split("\\|",2);
             switch (type){
-                case "T": return new Todo(status, entry[0]);
-                case "D": {
-//                    String by[] = entry[1].split("by");
+                case "T":
+                case "todo":
+                    return new Todo(status, entry[0]);
+                case "D":
+                case "deadline":{
                     return new Deadline(status, entry[0], entry[1]);
                 }
-                case "E": {
-//                    String at[] = entry[1].split("at");
+                case "E":
+                case "event": {
                     return new Event(status, entry[0], entry[1]);
                 }
                 default: throw new DukeException();
@@ -50,8 +50,4 @@ public class Task {
             throw new DukeException("Invalid format");
         }
     }
-
-//    public static Task createTask(String type, String reader){
-//
-//    }
 }

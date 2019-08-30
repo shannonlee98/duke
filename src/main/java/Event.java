@@ -1,16 +1,26 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Event extends Task {
 
     protected String at;
-
-    public Event(String description, String at){
-        super(description);
-        this.at = at;
-    }
+    protected Date datetime;
 
     public Event(int status, String description, String at) {
         super(description) ;
         this.at = at;
         if(status == 1) super.markAsDone();
+        this.datetime = setDatetime(this.at);
+    }
+
+    public Date setDatetime(String by) {
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            return format.parse(by);
+        } catch (ParseException e) {
+            return null;
+        }
     }
 
     @Override
@@ -22,4 +32,5 @@ public class Event extends Task {
     public String toString() {
         return "    [E]" + super.toString() + " (at: " + at + ")";
     }
+
 }

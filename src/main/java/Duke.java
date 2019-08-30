@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.Scanner;
-import java.util.stream.Stream;
 
 public class Duke {
 
@@ -29,40 +28,28 @@ public class Duke {
                     }
                     break;
                 }
-                case "todo": {
-                    list[numberOfTasks] = new Todo(input.nextLine());
-                    add();
-                    break;
-                }
-                case "deadline": {
-                    String info[] = input.nextLine().split("/by");
-                    list[numberOfTasks] = new Deadline(info[0], info[1]);
-                    add();
-                    break;
-                }
-                case "event": {
-                    String info[] = input.nextLine().split("/at");
-                    list[numberOfTasks] = new Event(info[0], info[1]);
-                    add();
-                    break;
-                }
                 default:
-                    print("OOPS!! I'm sorry, but I don't understand what that means.");
+                    try {
+                        list[numberOfTasks] = Task.createTask(text, 0, input.nextLine());
+                        add();
+                    } catch (DukeException e){
+                        print("OOPS!! I'm sorry, but I don't understand what that means.");
+                    }
             }
             printLine();
             text = input.next();
         }
-        writeToFile();
+        exit();
     }
 
     private static void readFile() throws FileNotFoundException {
-        String file = "output.txt";
+        String file = "data/duke.txt";
         Scanner reader = new Scanner(new File(file));
         while (reader.hasNextLine()){
             try {
                 String type = reader.next();
                 int status = reader.nextInt();
-                Task task = Task.createTask(type, status, reader.nextLine(), false);
+                Task task = Task.createTask(type, status, reader.nextLine());
                 list[numberOfTasks++] = task;
             } catch (DukeException e) {
                 print(e.getMessage());
@@ -71,20 +58,20 @@ public class Duke {
         reader.close();
     }
 
-    private static void add() {
-        print("Got it. I've added this task: ");
-        print(list[numberOfTasks].toString());
-        print("Now you have " + ++numberOfTasks + " tasks in the list.");
-    }
-
     public static void writeToFile() throws IOException {
-        PrintWriter writer = new PrintWriter("output.txt");
+        PrintWriter writer = new PrintWriter("data/duke.txt");
 
         for (int j = 0; j < numberOfTasks; j++) {
             String append = list[j].toFile();
             writer.append(append + "\n");
         }
         writer.close();
+    }
+
+    private static void add() {
+        print("Got it. I've added this task: ");
+        print(list[numberOfTasks].toString());
+        print("Now you have " + ++numberOfTasks + " tasks in the list.");
     }
 
     private static void done(int taskNumber) throws NumberFormatException{
@@ -119,7 +106,9 @@ public class Duke {
     }
 
     private static void exit() {
+        printLine();
         print("Bye. Hope to see you soon!");
+        printLine();
         try {
             writeToFile();
         } catch (IOException e) {

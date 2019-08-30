@@ -1,8 +1,0 @@
-T 0 holiday
-D 1 eat a lot|now
-E 0 fly away|then
-D 0 sleep later|9
-E 0 tea break|noon
-T 0 sleep
-D 0 assign | tmr
-E 0 school | today

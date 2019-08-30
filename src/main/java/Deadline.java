@@ -1,21 +1,31 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Deadline extends Task {
 
     protected String by;
-
-    public Deadline(String description, String by) {
-        super(description);
-        this.by = by;
-    }
+    protected Date datetime;
 
     public Deadline(int status, String description, String by) {
-        super(description) ;
-        this.by = by;
+        super(description);
+        this.by = by.trim();
         if(status == 1) super.markAsDone();
+        this.datetime = setDatetime(this.by);
     }
 
-    public String getBy() {
-        return this.by;
+    public Date setDatetime(String by) {
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            return format.parse(by);
+        } catch (ParseException e) {
+            return null;
+        }
     }
+
+//    public String getBy() {
+//        return this.by;
+//    }
 
     @Override
     public String toFile() {
