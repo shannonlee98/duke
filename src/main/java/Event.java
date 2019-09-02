@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class Event extends Task {
 
-    protected String at;
-    protected Date datetime;
+    private String at;
+    private Date datetime;
 
     public Event(int status, String description, String at) {
         super(description) ;
@@ -14,7 +14,7 @@ public class Event extends Task {
         this.datetime = setDatetime(this.at);
     }
 
-    public Date setDatetime(String by) {
+    private Date setDatetime(String by) {
         try {
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             return format.parse(by);
