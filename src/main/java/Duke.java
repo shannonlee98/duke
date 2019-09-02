@@ -21,8 +21,8 @@ public class Duke {
                     done();
                     break;
                 }
-                case "find": {
-                    find();
+                case "delete": {
+                    delete();
                     break;
                 }
                 default:
@@ -77,8 +77,7 @@ public class Duke {
             if (--taskNumber < tasks.size()) {
                 tasks.get(taskNumber).markAsDone();
                 print("Nice! I've marked this task as done:");
-//                print("[" + tasks.get(taskNumber).getStatusIcon() + "] " + tasks.get(taskNumber).description);
-                print(tasks.get(taskNumber).toString());
+                print("[" + tasks.get(taskNumber).getStatusIcon() + "] " + tasks.get(taskNumber).description);
                 printTasksInList();
             } else {
                 print("No such task number.");
@@ -88,18 +87,20 @@ public class Duke {
         }
     }
 
-    private static void find() {
-        String search = input.next();
-        print("Here are the matching tasks in your list:");
-        for (Task entry : tasks){
-            if (entry.description.contains(search)){
-                printTask(entry);
+    private static void delete() {
+        try {
+            int taskNumber = input.nextInt();
+            if (--taskNumber < tasks.size()) {
+                print("Noted, I've removed this task:");
+                print("[" + tasks.get(taskNumber).getStatusIcon() + "] " + tasks.get(taskNumber).description);
+                tasks.remove(taskNumber);
+                printTasksInList();
+            } else {
+                print("No such task number.");
             }
+        } catch (NumberFormatException e) {
+            print("Please enter a number.");
         }
-    }
-
-    private static void printTask(Task entry) {
-        print("\t" + (tasks.indexOf(entry)+1) + "." + entry.toString());
     }
 
     private static void printTasksInList() {
@@ -108,9 +109,8 @@ public class Duke {
 
     private static void list() {
         print("Here are the tasks in your list:");
-//        for (int j = 0; j < tasks.size(); j++){
         for (Task entry : tasks){
-            printTask(entry);
+//            printTask(entry);
         }
     }
 

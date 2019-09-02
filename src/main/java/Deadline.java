@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class Deadline extends Task {
 
-    protected String by;
-    protected Date datetime;
+    private String by;
+    private Date datetime;
 
     public Deadline(int status, String description, String by) {
         super(description);
@@ -14,7 +14,7 @@ public class Deadline extends Task {
         this.datetime = setDatetime(this.by);
     }
 
-    public Date setDatetime(String by) {
+    private Date setDatetime(String by) {
         try {
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             return format.parse(by);
@@ -22,10 +22,6 @@ public class Deadline extends Task {
             return null;
         }
     }
-
-//    public String getBy() {
-//        return this.by;
-//    }
 
     @Override
     public String toFile() {
