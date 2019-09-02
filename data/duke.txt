@@ -5,8 +5,6 @@ T 0 duke project
 E 0 reflection paper | sunday
 D 0 tutorial review |weekend
 T 0 level 8
-T 0 Level 1
-D 1 level 2 |hekko
 E 0 level 3 | heddo hi
 T 0 hello
 D 0 birth day |01/10/1998
