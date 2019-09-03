@@ -3,11 +3,7 @@ import java.util.Scanner;
 
 public class Todo extends Task{
 
-    public Todo(String description) {
-        super(description);
-    }
-
-    public Todo(int status, String description) {
+    Todo(int status, String description) {
         super(description);
         if(status == 1) super.markAsDone();
     }

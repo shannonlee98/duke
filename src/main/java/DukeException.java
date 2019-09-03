@@ -1,10 +1,10 @@
-public class DukeException extends Exception {
+class DukeException extends Exception {
 
-    public DukeException(){
+    DukeException(){
         super();
     }
 
-    public DukeException(String message) {
+    DukeException(String message) {
         super(message);
     }
 }

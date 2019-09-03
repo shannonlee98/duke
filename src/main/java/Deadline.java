@@ -7,7 +7,7 @@ public class Deadline extends Task {
     private String by;
     private Date datetime;
 
-    public Deadline(int status, String description, String by) {
+    Deadline(int status, String description, String by) {
         super(description);
         this.by = by.trim();
         if(status == 1) super.markAsDone();

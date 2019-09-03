@@ -7,7 +7,7 @@ public class Event extends Task {
     private String at;
     private Date datetime;
 
-    public Event(int status, String description, String at) {
+    Event(int status, String description, String at) {
         super(description) ;
         this.at = at;
         if(status == 1) super.markAsDone();

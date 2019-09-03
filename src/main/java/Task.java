@@ -1,5 +1,5 @@
 public class Task {
-    protected String description;
+    String description;
     private boolean isDone;
 
     public Task(String description) {
@@ -7,11 +7,11 @@ public class Task {
         this.isDone = false;
     }
 
-    public String getStatusIcon() {
+    private String getStatusIcon() {
         return (isDone ? "✓" : "✗");
     }
 
-    public void markAsDone() {
+    void markAsDone() {
         this.isDone = true;
     }
 
@@ -27,7 +27,7 @@ public class Task {
         return (isDone ? 1 : 0);
     }
 
-    public static Task createTask(String type, int status, String reader) throws DukeException {
+    static Task createTask(String type, int status, String reader) throws DukeException {
         try {
             reader = reader.replace("/at", "|");
             reader = reader.replace("/by", "|");
