@@ -13,7 +13,7 @@ class TaskList {
     }
 
     int indexOf(Task entry) {
-        return this.taskList.indexOf(entry);
+        return this.taskList.indexOf(entry) + 1;
     }
 
     int size() {
@@ -24,5 +24,8 @@ class TaskList {
     }
 
     void remove(int taskNumber) { this.taskList.remove(taskNumber);
+    }
+
+    void add(Task task) { this.taskList.add(task);
     }
 }

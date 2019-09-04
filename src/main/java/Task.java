@@ -20,7 +20,7 @@ public class Task {
     }
 
     public String toFile() {
-        return this.getStatus() + this.description;
+        return this.getStatus() + " " + this.description;
     }
 
     private int getStatus() {

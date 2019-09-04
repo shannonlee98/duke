@@ -11,10 +11,10 @@ class FindCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        print("Here are the matching tasks in your list:");
+        ui.showFindMessage();
         for (Task entry : tasks.taskList) {
             if (entry.description.contains(search)) {
-                printTask(entry, tasks);
+                ui.printTask(entry, tasks);
             }
         }
     }

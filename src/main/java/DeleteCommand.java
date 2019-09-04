@@ -12,15 +12,15 @@ public class DeleteCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
             if (--taskNumber < tasks.size()) {
-                print("Noted, I've removed this task:");
-                printTask(tasks.get(taskNumber), tasks);
+                ui.showDeleteMessage();
+                ui.printTask(tasks.get(taskNumber), tasks);
                 tasks.remove(taskNumber);
-                showNumberOfRemainingTasks(tasks);
+                ui.showNumberOfRemainingTasks(tasks);
             } else {
-                print("No such task number.");
+                ui.showError("No such task number.");
             }
         } catch (NumberFormatException e) {
-            print("Please enter a number.");
+            ui.showError("Please enter a number.");
         }
     }
 }

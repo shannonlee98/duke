@@ -1,11 +1,11 @@
 import java.util.Scanner;
 
 class Ui {
-
     Ui(){
     }
 
-    void showLoadingError() {
+    void showLoadingError(String errorMessage) {
+        print(errorMessage);
     }
 
     void showWelcome() {
@@ -35,5 +35,39 @@ class Ui {
 
     void showError(String message) {
         print(message);
+    }
+
+    void showCommand(Task task, TaskList taskList) {
+        print("Got it. I've added this task: ");
+        print(task.toString());
+        showNumberOfRemainingTasks(taskList);
+    }
+
+    void showNumberOfRemainingTasks(TaskList taskList) {
+        print("Now you have " + taskList.size() + " tasks in the list.");
+    }
+
+    void printTask(Task entry, TaskList tasks) {
+        print("\t" + tasks.indexOf(entry) + "." + entry.toString());
+    }
+
+    void showGoodbye() {
+        print("Bye. Hope to see you soon!");
+    }
+
+    void showDeleteMessage() {
+        print("Noted, I've removed this task:");
+    }
+
+    void showDoneMessage() {
+        print("Nice! I've marked this task as done:");
+    }
+
+    void showFindMessage() {
+        print("Here are the matching tasks in your list:");
+    }
+
+    void showListMessage() {
+        print("Here are the tasks in your list:");
     }
 }

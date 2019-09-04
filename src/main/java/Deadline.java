@@ -1,5 +1,3 @@
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Deadline extends Task {
@@ -9,18 +7,15 @@ public class Deadline extends Task {
 
     Deadline(int status, String description, String by) {
         super(description);
-        this.by = by.trim();
+        this.by = by;
         if(status == 1) super.markAsDone();
-        this.datetime = setDatetime(this.by);
+        this.datetime = Parser.setDatetime(by);
     }
 
-    private Date setDatetime(String by) {
-        try {
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            return format.parse(by);
-        } catch (ParseException e) {
-            return null;
-        }
+    Deadline(String description, String by) {
+        super(description);
+        this.by = by;
+        this.datetime = Parser.setDatetime(by);
     }
 
     @Override

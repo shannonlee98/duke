@@ -1,7 +1,8 @@
-import java.io.Reader;
-import java.util.Scanner;
-
 public class Todo extends Task{
+
+    Todo(String description) {
+        super(description);
+    }
 
     Todo(int status, String description) {
         super(description);

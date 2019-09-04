@@ -11,11 +11,11 @@ public class ByeCommand extends Command{
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        print("Bye. Hope to see you soon!");
+        ui.showGoodbye();
         try {
             writeToFile(tasks.taskList);
         } catch (FileNotFoundException e) {
-            print("Error writing to file.");
+            ui.showLoadingError("Error writing to file.");
         }
     }
 

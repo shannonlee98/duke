@@ -16,9 +16,7 @@ class Storage {
         try {
             Scanner reader = new Scanner(new File(filepath));
             while (reader.hasNextLine()){
-                String type = reader.next();
-                int status = reader.nextInt();
-                Task task = Task.createTask(type, status, reader.nextLine());
+                Task task = Parser.parseTask(reader.nextLine());
                 tasks.add(task);
             }
             reader.close();

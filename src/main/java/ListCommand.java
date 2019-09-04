@@ -4,9 +4,9 @@ public class ListCommand extends Command{
     }
 
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        print("Here are the tasks in your list:");
-        for (Task entry : tasks.taskList){
-            printTask(entry, tasks);
+        ui.showListMessage();
+        for (Task entry : tasks.taskList) {
+            ui.printTask(entry, tasks);
         }
     }
 }

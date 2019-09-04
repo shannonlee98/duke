@@ -14,6 +14,12 @@ public class Event extends Task {
         this.datetime = setDatetime(this.at);
     }
 
+    Event(String description, String at) {
+        super(description);
+        this.at = at;
+        this.datetime = setDatetime(at);
+    }
+
     private Date setDatetime(String by) {
         try {
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");

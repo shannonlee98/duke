@@ -12,14 +12,14 @@ public class DoneCommand extends Command {
         try {
             if (--taskNumber < tasks.size()) {
                 tasks.get(taskNumber).markAsDone();
-                print("Nice! I've marked this task as done:");
-                printTask(tasks.get(taskNumber), tasks);
-                showNumberOfRemainingTasks(tasks);
+                ui.showDoneMessage();
+                ui.printTask(tasks.get(taskNumber), tasks);
+                ui.showNumberOfRemainingTasks(tasks);
             } else {
-                print("No such task number.");
+                ui.showError("No such task number.");
             }
         } catch (NumberFormatException e) {
-            print("Please enter a number.");
+            ui.showError("Please enter a number.");
         }
     }
 }
