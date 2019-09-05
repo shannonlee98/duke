@@ -1,7 +1,16 @@
-import java.util.ArrayList;
-public class TodoCommand extends AddCommand {
-    TodoCommand(String description) {
-        super(description);
+import java.util.NoSuchElementException;
+
+public class TodoCommand extends Command {
+
+    private String description;
+
+    TodoCommand(String description) throws DukeException {
+        super();
+        try{
+            this.description = description;
+        } catch (NoSuchElementException e) {
+            throw new DukeException("Please enter a description for todo");
+        }
     }
 
     @Override
@@ -9,11 +18,5 @@ public class TodoCommand extends AddCommand {
         Todo todo = new Todo(this.description);
         tasks.add(todo);
         ui.showCommand(todo, tasks);
-    }
-
-    @Override
-    public void writeToFile(ArrayList<Task> tasks) {
-        Todo todo = new Todo(this.description);
-        tasks.add(todo);
     }
 }

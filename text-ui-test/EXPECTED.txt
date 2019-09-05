@@ -1,15 +1,16 @@
-T 0 sleep
-D 0 assign |tmr
-E 0 school | today
-T 0 duke project
-E 0 reflection paper | sunday
-D 0 tutorial review |weekend
-T 0 level 8
-T 0 Level 1
-D 1 level 2 |hekko
-E 0 level 3 | heddo hi
-T 0 hello
-D 0 birth day |01/10/1998
-D 0 birthday |next month
-E 0 midterm | 11/11/1111
-E 1 final | end
+Oops! File not found.^M
+ ____        _
+|  _ \ _   _| | _____
+| | | | | | | |/ / _ \
+| |_| | |_| |   <  __/
+|____/ \__,_|_|\_\___|
+^M
+_______________________________________________^M
+Hello! I'm Duke
+What can I do for you^M
+_______________________________________________^M
+_______________________________________________^M
+Bye. Hope to see you soon!^M
+I couldn't find the file to write to.^M
+_______________________________________________^M
+_______________________________________________^M

@@ -10,7 +10,7 @@ public class Duke {
         try {
             tasks = new TaskList(storage.load());
         } catch (DukeException e) {
-            ui.showLoadingError(e.getMessage());
+            ui.showError(e);
             tasks = new TaskList();
         }
     }
@@ -26,7 +26,7 @@ public class Duke {
                 c.execute(tasks, ui, storage);
                 isExit = c.isExit();
             } catch (DukeException e) {
-                ui.showError(e.getMessage());
+                ui.showError(e);
             } finally {
                 ui.showLine();
             }

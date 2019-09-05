@@ -1,5 +1,3 @@
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Event extends Task {
@@ -11,22 +9,13 @@ public class Event extends Task {
         super(description) ;
         this.at = at;
         if(status == 1) super.markAsDone();
-        this.datetime = setDatetime(this.at);
+        this.datetime = Parser.setDatetime(at);
     }
 
     Event(String description, String at) {
         super(description);
         this.at = at;
-        this.datetime = setDatetime(at);
-    }
-
-    private Date setDatetime(String by) {
-        try {
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            return format.parse(by);
-        } catch (ParseException e) {
-            return null;
-        }
+        this.datetime = Parser.setDatetime(at);
     }
 
     @Override

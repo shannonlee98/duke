@@ -4,10 +4,6 @@ class Ui {
     Ui(){
     }
 
-    void showLoadingError(String errorMessage) {
-        print(errorMessage);
-    }
-
     void showWelcome() {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -33,8 +29,8 @@ class Ui {
         return new Scanner(System.in).nextLine();
     }
 
-    void showError(String message) {
-        print(message);
+    void showError(DukeException e) {
+        print(e.getMessage());
     }
 
     void showCommand(Task task, TaskList taskList) {

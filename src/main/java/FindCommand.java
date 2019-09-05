@@ -1,12 +1,10 @@
-import java.util.Scanner;
-
 class FindCommand extends Command {
 
     private String search;
 
-    FindCommand(Scanner command) {
+    FindCommand(String command) {
         super();
-        this.search = command.nextLine();
+        this.search = command.trim();
     }
 
     @Override

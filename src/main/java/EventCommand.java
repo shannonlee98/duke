@@ -1,11 +1,11 @@
-import java.util.ArrayList;
+class EventCommand extends Command {
 
-class EventCommand extends AddCommand {
-
-    String by;
+    private String description;
+    private String by;
 
     EventCommand(String description, String by) {
-        super(description);
+        super();
+        this.description = description;
         this.by = by;
     }
 
@@ -14,11 +14,5 @@ class EventCommand extends AddCommand {
         Event event = new Event(this.description, this.by);
         tasks.add(event);
         ui.showCommand(event, tasks);
-    }
-
-    @Override
-    public void writeToFile(ArrayList<Task> tasks) {
-        Event event = new Event(this.description, this.by);
-        tasks.add(event);
     }
 }

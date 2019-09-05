@@ -10,12 +10,12 @@ public class ByeCommand extends Command{
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
         ui.showGoodbye();
         try {
             writeToFile(tasks.taskList);
         } catch (FileNotFoundException e) {
-            ui.showLoadingError("Error writing to file.");
+            throw new DukeException("I couldn't find the file to write to.");
         }
     }
 

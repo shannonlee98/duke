@@ -1,6 +1,8 @@
 D 0 birthday|next month
-E 0 midterm|11/11/1111
 E 1 final|end
 D 0 exco meeting|DW house
 D 0 hi|when
 T 0 world
+T 0 
+D 0 1|2
+E 0 2|3

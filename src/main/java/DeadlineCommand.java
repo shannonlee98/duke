@@ -1,11 +1,11 @@
-import java.util.ArrayList;
+class DeadlineCommand extends Command {
 
-class DeadlineCommand extends AddCommand {
-
-    String by;
+    private String description;
+    private String by;
 
     DeadlineCommand(String description, String by) {
-        super(description);
+        super();
+        this.description = description;
         this.by = by;
     }
 
@@ -14,11 +14,5 @@ class DeadlineCommand extends AddCommand {
         Deadline deadline = new Deadline(this.description, this.by);
         tasks.add(deadline);
         ui.showCommand(deadline, tasks);
-    }
-
-    @Override
-    public void writeToFile(ArrayList<Task> tasks) {
-        Deadline deadline = new Deadline(this.description, this.by);
-        tasks.add(deadline);
     }
 }

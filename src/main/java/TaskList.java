@@ -20,12 +20,9 @@ class TaskList {
         return this.taskList.size();
     }
 
-    Task get(int taskNumber) { return this.taskList.get(taskNumber);
-    }
+    Task get(int taskNumber) { return this.taskList.get(taskNumber); }
 
-    void remove(int taskNumber) { this.taskList.remove(taskNumber);
-    }
+    void remove(int taskNumber) { this.taskList.remove(taskNumber); }
 
-    void add(Task task) { this.taskList.add(task);
-    }
+    void add(Task task) { this.taskList.add(task); }
 }
