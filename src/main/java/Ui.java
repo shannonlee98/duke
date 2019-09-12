@@ -1,3 +1,4 @@
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 class Ui {
@@ -25,8 +26,8 @@ class Ui {
         System.out.println(s);
     }
 
-    String readCommand() {
-        return new Scanner(System.in).nextLine();
+    String readCommand(Scanner input) throws NoSuchElementException {
+        return input.nextLine();
     }
 
     void showError(DukeException e) {
